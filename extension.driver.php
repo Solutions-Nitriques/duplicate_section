@@ -134,28 +134,53 @@
 				
 				$section = $sm->fetch($section_id);
 				
-				$section_settings = $section->get();
+				if ($section != null) {
+					$section_settings = $section->get();
 				
-				// remove id
-				unset($section_settings['id']);
-				
-				// new name
-				$section_settings['name'] .= ' ' . time();
-				$section_settings['handle'] = Lang::createHandle($section_settings['name']);
-				
-				//$fields = $section->fetchFields();
-				
-				// create new section
-				//$section = $sm->create();
-				//$section->set($section_settings);
-				
-				// save it
-				$new_section_id = $sm->add($section_settings);
-				
-				//$clone_section = $sm->
-				
-				//var_dump();
-				//die;
+					// remove id
+					unset($section_settings['id']);
+					
+					// new name
+					$section_settings['name'] .= ' ' . time();
+					$section_settings['handle'] = Lang::createHandle($section_settings['name']);
+					
+					// save it
+					$new_section_id = $sm->add($section_settings);
+					
+					
+					
+					if ( is_numeric($new_section_id) && $new_section_id > 0) {
+						
+						//var_dump($section->fetchFields());
+						//die;
+					
+						// get the fields of the section
+						$fields = $section->fetchFields();
+						
+						if (is_array($fields)) {
+		
+							foreach ($fields as &$field) {
+								
+								$fs = $field->get();
+								
+								unset($fs['id']);
+								$fs['parent_section'] = $new_section_id;
+								
+								//var_dump($fs);die;
+								
+								$f = $fm->create($fs['type']);
+								$f->setArray($fs);
+								$f->commit();
+							}
+						}
+
+						redirect(sprintf(
+							'%s/blueprints/sections/edit/%s/',
+							SYMPHONY_URL,
+							$new_section_id
+						));
+					}
+				}
 			}
 		}
 	}

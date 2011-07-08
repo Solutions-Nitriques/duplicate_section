@@ -129,8 +129,33 @@
 				
 				$section_id = $c['context'][1];
 				
-				var_dump($section_id );
-				die;
+				$sm = new SectionManager($context['parent']);
+				$fm = new FieldManager($context['parent']);
+				
+				$section = $sm->fetch($section_id);
+				
+				$section_settings = $section->get();
+				
+				// remove id
+				unset($section_settings['id']);
+				
+				// new name
+				$section_settings['name'] .= ' ' . time();
+				$section_settings['handle'] = Lang::createHandle($section_settings['name']);
+				
+				//$fields = $section->fetchFields();
+				
+				// create new section
+				//$section = $sm->create();
+				//$section->set($section_settings);
+				
+				// save it
+				$new_section_id = $sm->add($section_settings);
+				
+				//$clone_section = $sm->
+				
+				//var_dump();
+				//die;
 			}
 		}
 	}

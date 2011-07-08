@@ -17,12 +17,12 @@
 	$dictionary = array(
 
 		'Easily duplicate/clone your section parameters and fields' =>
-		false,
+		'Duplique/clone facilement une section avec ses paramètres et ses champs',
 		
 		
 		'Clone' =>
 		'Cloner',
 		
 		'Duplicate this section' =>
-		false
+		'Dupliquer cette section'
 	);

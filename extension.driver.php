@@ -9,6 +9,7 @@
 	/**
 	 *
 	 * Duplicate Section Decorator/Extension
+	 * Permits admin to duplicate/clone a section data model
 	 * @author nicolasbrassard
 	 *
 	 */
@@ -62,12 +63,13 @@
 			);
 		}
 		
-		public function appendElementBelowView(&$context) {
+		/**
+		 * 
+		 * Delegate fired when it's time to append elements into the backend page
+		 * @param array $context
+		 */
+		public function appendElementBelowView(Array &$context) {
 			$c = Administration::instance()->getPageCallback();
-			
-			//var_dump(Administration::instance()->Page);
-			//var_dump(self::getChildrenByName($context['parent']->Page->Wrapper, 'select', 'with-selected'));
-				//die;
 			
 			// when editing a section
 			if ($c['driver'] == 'blueprintssections' && $c['context'][0] == 'edit') {
@@ -100,6 +102,14 @@
 
 		}
 		
+		/**
+		 * 
+		 * Recursive search for an Element with the right name and css class.
+		 * Stops at fists match
+		 * @param XMLElement $rootElement
+		 * @param string $tagName
+		 * @param string $className
+		 */
 		private static function getChildrenWithClass($rootElement, $tagName, $className) {
 			if (! ($rootElement) instanceof XMLElement) {
 				return NULL; // not and XMLElement
@@ -123,7 +133,14 @@
 		}
 
 		
-		public function __action(&$context) {			
+		/**
+		 * 
+		 * Method that handles the click of the 'clone' button
+		 * @param array $context
+		 */
+		public function __action(Array &$context) {	
+
+			// if the clone button was hit
 			if (is_array($_POST['action']) && isset($_POST['action']['clone'])) {
 				$c = Administration::instance()->getPageCallback();
 				
@@ -148,37 +165,48 @@
 					$new_section_id = $sm->add($section_settings);
 					
 					
-					
+					// if the create new section was successful
 					if ( is_numeric($new_section_id) && $new_section_id > 0) {
 						
-						//var_dump($section->fetchFields());
-						//die;
 					
 						// get the fields of the section
 						$fields = $section->fetchFields();
 						
+						// if we have some
 						if (is_array($fields)) {
 		
+							// copy each field
 							foreach ($fields as &$field) {
 								
+								// get field settings
 								$fs = $field->get();
 								
+								// un set the current id
 								unset($fs['id']);
+								
+								// set the new section as the parent
 								$fs['parent_section'] = $new_section_id;
 								
-								//var_dump($fs);die;
-								
+								// create the new field
 								$f = $fm->create($fs['type']);
+								
+								// set its settings
 								$f->setArray($fs);
+								
+								// save
 								$f->commit();
 							}
 						}
 
+						// redirect to the new cloned section
 						redirect(sprintf(
 							'%s/blueprints/sections/edit/%s/',
 							SYMPHONY_URL,
 							$new_section_id
 						));
+						
+						// stop everything now
+						exit;
 					}
 				}
 			}

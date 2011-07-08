@@ -6,7 +6,7 @@ Version: 1.0
 
 ### SPECS ###
 
-- 
+- Adds a 'Clone' button on the edit page of a section
 
 ### REQUIREMENTS ###
 

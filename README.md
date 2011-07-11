@@ -6,7 +6,7 @@ Version: 1.0
 
 ### SPECS ###
 
-- Adds a 'Clone' button on the edit page of a section
+- Adds a 'Clone' button on the bottom-left of the edit page of a section
 
 ### REQUIREMENTS ###
 
@@ -18,7 +18,6 @@ Version: 1.0
 - (re)Name the folder duplicate_sections
 - Put into the extension directory
 - Enable/install just like any other extension
-- 
 
 *Voila !*
 

@@ -77,7 +77,7 @@
 				$form = Administration::instance()->Page->Form;
 				
 				$button_wrap = new XMLELement('div', NULL, array(
-					'id' => 'duplicate-section',
+					'id' => 'duplicate-section'
 				));
 				
 				
@@ -146,10 +146,14 @@
 				
 				$section_id = $c['context'][1];
 				
+				/* Old code for symphony 2.2
 				$sm = new SectionManager($context['parent']);
 				$fm = new FieldManager($context['parent']);
 				
 				$section = $sm->fetch($section_id);
+				*/
+				
+				$section = SectionManager::fetch($section_id);
 				
 				if ($section != null) {
 					$section_settings = $section->get();
@@ -162,8 +166,10 @@
 					$section_settings['handle'] = Lang::createHandle($section_settings['name']);
 					
 					// save it
+					/* Old code for symphony 2.2
 					$new_section_id = $sm->add($section_settings);
-					
+					*/
+					$new_section_id = SectionManager::add($section_settings);
 					
 					// if the create new section was successful
 					if ( is_numeric($new_section_id) && $new_section_id > 0) {
@@ -188,7 +194,11 @@
 								$fs['parent_section'] = $new_section_id;
 								
 								// create the new field
+								
+								/* Old code for symphony 2.2
 								$f = $fm->create($fs['type']);
+								*/
+								$f = FieldManager::create($fs['type']);
 								
 								// set its settings
 								$f->setArray($fs);

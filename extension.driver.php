@@ -15,15 +15,15 @@
 	 */
 	class extension_duplicate_section extends Extension {
 
-		/**
+		/*
 		 * Name of the extension
 		 * @var string
-		 */
+		 *
 		const EXT_NAME = 'Duplicate Section';
 
-		/**
+		/*
 		 * Credits for the extension
-		 */
+		 *
 		public function about() {
 			return array(
 				'name'			=> self::EXT_NAME,
@@ -40,7 +40,7 @@
 					'2.2' => true
 				)
 	 		);
-		}
+		}*/
 
 		/**
 		 *

@@ -1,6 +1,6 @@
 # Duplicate Sections #
 
-Version: 1.1
+Version: 1.2 
 
 ## Easily duplicate/clone your section parameters and fields ##
 
@@ -10,7 +10,9 @@ Version: 1.1
 
 ### REQUIREMENTS ###
 
-- Symphony CMS version 2.2 and up (as of the day of the last release of this extension)
+- Symphony CMS version 2.3 and up (as of the day of the last release of this extension)
+
+For user with symphony CMS version 2.2.x, use tag V1.1
 
 ### INSTALLATION ###
 

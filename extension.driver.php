@@ -10,37 +10,10 @@
 	 *
 	 * Duplicate Section Decorator/Extension
 	 * Permits admin to duplicate/clone a section data model
-	 * @author nicolasbrassard
+	 * @author nicolasbrassard, pascalpiche
 	 *
 	 */
 	class extension_duplicate_section extends Extension {
-
-		/**
-		 * Name of the extension
-		 * @var string
-		 */
-		const EXT_NAME = 'Duplicate Section';
-
-		/**
-		 * Credits for the extension
-		 */
-		public function about() {
-			return array(
-				'name'			=> self::EXT_NAME,
-				'version'		=> '1.0',
-				'release-date'	=> '2011-07-08',
-				'author'		=> array(
-					'name'			=> 'Solutions Nitriques',
-					'website'		=> 'http://www.nitriques.com/open-source/',
-					'email'			=> 'open-source (at) nitriques.com'
-				),
-				'description'	=> __('Easily duplicate/clone your section parameters and fields'),
-				'compatibility' => array(
-					'2.2.1' => true,
-					'2.2' => true
-				)
-	 		);
-		}
 
 		/**
 		 *
@@ -52,11 +25,6 @@
 			return array(
 				array(
 					'page' => '/backend/',
-					'delegate' => 'AppendElementBelowView',
-					'callback' => 'appendElementBelowView'
-				),
-				array(
-					'page' => '/backend/',
 					'delegate' => 'AdminPagePreGenerate',
 					'callback' => '__action'
 				)
@@ -65,7 +33,7 @@
 		
 		/**
 		 * 
-		 * Delegate fired when it's time to append elements into the backend page
+		 * Fired on each backend page, detect when it's time to append elements into the backend page
 		 * @param array $context
 		 */
 		public function appendElementBelowView(Array &$context) {
@@ -77,9 +45,8 @@
 				$form = Administration::instance()->Page->Form;
 				
 				$button_wrap = new XMLELement('div', NULL, array(
-					'id' => 'duplicate-section',
+					'id' => 'duplicate-section'
 				));
-				
 				
 				$btn = new XMLElement('button', __('Clone'), array(
 					'id' => 'duplicate-section-clone',
@@ -99,7 +66,6 @@
 					$div_action->appendChild($button_wrap);
 				}
 			}
-
 		}
 		
 		/**
@@ -128,28 +94,26 @@
 					return $res;
 				}
 			}
-			
 			return NULL;
 		}
 
 		
 		/**
 		 * 
-		 * Method that handles the click of the 'clone' button
+		 * Delegate AdminPagePreGenerate that handles the click of the 'clone' button and append the button in the form
 		 * @param array $context
 		 */
 		public function __action(Array &$context) {	
 
+			self::appendElementBelowView($context);
+			
 			// if the clone button was hit
 			if (is_array($_POST['action']) && isset($_POST['action']['clone'])) {
 				$c = Administration::instance()->getPageCallback();
 				
 				$section_id = $c['context'][1];
 				
-				$sm = new SectionManager($context['parent']);
-				$fm = new FieldManager($context['parent']);
-				
-				$section = $sm->fetch($section_id);
+				$section = SectionManager::fetch($section_id);
 				
 				if ($section != null) {
 					$section_settings = $section->get();
@@ -162,8 +126,7 @@
 					$section_settings['handle'] = Lang::createHandle($section_settings['name']);
 					
 					// save it
-					$new_section_id = $sm->add($section_settings);
-					
+					$new_section_id = SectionManager::add($section_settings);
 					
 					// if the create new section was successful
 					if ( is_numeric($new_section_id) && $new_section_id > 0) {
@@ -188,7 +151,7 @@
 								$fs['parent_section'] = $new_section_id;
 								
 								// create the new field
-								$f = $fm->create($fs['type']);
+								$f = FieldManager::create($fs['type']);
 								
 								// set its settings
 								$f->setArray($fs);

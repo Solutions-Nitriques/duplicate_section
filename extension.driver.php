@@ -54,7 +54,8 @@
 					'name' => 'action[clone]',
 					'type' => 'submit',
 					'title' => __('Duplicate this section'),
-					'style' => 'margin-left: 10px; background: #81B934'
+					'style' => 'margin-left: 10px; background: #81B934',
+					'onclick' => "jQuery('fieldset.settings').empty();alert('');return true;"
 				));
 				
 				$button_wrap->appendChild($btn);

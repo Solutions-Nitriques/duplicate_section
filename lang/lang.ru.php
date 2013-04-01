@@ -1,11 +1,11 @@
 <?php
 
 	$about = array(
-		'name' => 'New translation',
+		'name' => 'Русский',
 		'author' => array(
-			'name' => 'Super Administrator',
-			'email' => 'post@urbanhack.ru',
-			'website' => ''
+			'name' => 'Александр Бирюков',
+			'email' => 'info@alexbirukov.ru',
+			'website' => 'http://alexbirukov.ru'
 		),
 		'release-date' => '2012-10-19'
 	);

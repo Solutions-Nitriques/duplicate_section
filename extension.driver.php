@@ -55,7 +55,7 @@
 					'type' => 'submit',
 					'title' => __('Duplicate this section'),
 					'style' => 'margin-left: 10px; background: #81B934',
-					'onclick' => "jQuery('fieldset.settings').empty();alert('');return true;"
+					'onclick' => "jQuery('fieldset.settings').empty();return true;"
 				));
 				
 				$button_wrap->appendChild($btn);

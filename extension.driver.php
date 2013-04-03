@@ -37,34 +37,39 @@
 		 * @param array $context
 		 */
 		public function appendElementBelowView(Array &$context) {
-			$c = Administration::instance()->getPageCallback();
-			
-			// when editing a section
-			if ($c['driver'] == 'blueprintssections' && $c['context'][0] == 'edit') {
+			// only if logged in
+			// this prevents the clone button from appearing on the login screen
+			if (Administration::instance()->isLoggedIn()) {
 				
-				$form = Administration::instance()->Page->Form;
+				$c = Administration::instance()->getPageCallback();
 				
-				$button_wrap = new XMLELement('div', NULL, array(
-					'id' => 'duplicate-section'
-				));
-				
-				$btn = new XMLElement('button', __('Clone'), array(
-					'id' => 'duplicate-section-clone',
-					'class' => 'button',
-					'name' => 'action[clone]',
-					'type' => 'submit',
-					'title' => __('Duplicate this section'),
-					'style' => 'margin-left: 10px; background: #81B934',
-					'onclick' => "jQuery('fieldset.settings').empty();return true;"
-				));
-				
-				$button_wrap->appendChild($btn);
-				
-				// add content to the right div
-				$div_action = self::getChildrenWithClass($form, 'div', 'actions');
-				
-				if ($div_action != NULL) {
-					$div_action->appendChild($button_wrap);
+				// when editing a section
+				if ($c['driver'] == 'blueprintssections' && $c['context'][0] == 'edit') {
+					
+					$form = Administration::instance()->Page->Form;
+					
+					$button_wrap = new XMLELement('div', NULL, array(
+						'id' => 'duplicate-section'
+					));
+					
+					$btn = new XMLElement('button', __('Clone'), array(
+						'id' => 'duplicate-section-clone',
+						'class' => 'button',
+						'name' => 'action[clone]',
+						'type' => 'submit',
+						'title' => __('Duplicate this section'),
+						'style' => 'margin-left: 10px; background: #81B934',
+						'onclick' => "jQuery('fieldset.settings').empty();return true;"
+					));
+					
+					$button_wrap->appendChild($btn);
+					
+					// add content to the right div
+					$div_action = self::getChildrenWithClass($form, 'div', 'actions');
+					
+					if ($div_action != NULL) {
+						$div_action->appendChild($button_wrap);
+					}
 				}
 			}
 		}

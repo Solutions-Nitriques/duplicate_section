@@ -103,7 +103,23 @@
 			}
 			return NULL;
 		}
-
+		
+		/**
+		 * This method search to the field referenced by the $handle param
+		 * and returns its id.
+		 *
+		 * @param array $fields
+		 * @param string $handle
+		 */
+		private static function getNewFieldId(Array &$fields, $handle) {
+			foreach ($fields as &$field) {
+				var_dump($field->get());
+				if ($field->get('element_name') == $handle) {
+					return intval($field->get('id'));
+				}
+			}
+			return NULL;
+		}
 		
 		/**
 		 * 
@@ -111,7 +127,7 @@
 		 * @param array $context
 		 */
 		public function __action(Array &$context) {	
-
+			// append button
 			self::appendElementBelowView($context);
 			
 			// if the clone button was hit
@@ -120,11 +136,13 @@
 				
 				$section_id = $c['context'][1];
 				
+				// original section
 				$section = SectionManager::fetch($section_id);
 				
 				if ($section != null) {
+					// get its settings
 					$section_settings = $section->get();
-				
+					
 					// remove id
 					unset($section_settings['id']);
 					
@@ -136,7 +154,7 @@
 					$new_section_id = SectionManager::add($section_settings);
 					
 					// if the create new section was successful
-					if ( is_numeric($new_section_id) && $new_section_id > 0) {
+					if (is_numeric($new_section_id) && $new_section_id > 0) {
 						
 						// get the fields of the section
 						$fields = $section->fetchFields();
@@ -168,7 +186,33 @@
 						}
 						
 						// get this section relations
+						$relationships = SectionManager::fetchAssociatedSections($section_id, false);
 						
+						// fetch the new fields
+						$new_section = SectionManager::fetch($new_section_id);
+						$new_fields = $new_section->fetchFields();
+						
+						if (is_array($relationships)) {
+							// re-create all of those relations
+							foreach ($relationships as $relation) {
+								var_dump($relation);die;
+								
+								$new_section_field_id = self::getNewFieldId($new_fields, $relation['handle']);
+								
+								if (is_numeric($new_section_field_id) && $new_section_field_id > 0) {
+									SectionManager::createSectionAssociation(
+										$new_section_id, // the new parent
+										$relation['child_field_id'],
+										$new_section_field_id, // the new parent field
+										$relation['show_association']
+									);
+									var_dump($child_field_id);
+								} else {
+									throw new Exception(sprintf("Could not find the '%s' field", $relation['handle']));
+								}
+							}
+						}
+						die;
 						
 						// redirect to the new cloned section
 						redirect(sprintf(
@@ -183,7 +227,9 @@
 					} else {
 						throw new Exception("Could not create a new section");
 					}
+				} else {
+					Throw new Exception("Section not found");
 				}
-			}
+			} // end clonde button
 		}
 	}

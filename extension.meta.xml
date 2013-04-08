@@ -11,12 +11,12 @@
 	</types>
 	<authors>
 		<author>
-			<name github="Solutions-Nitriques" symphony="Nitriques" twitter="Nitriques">Solutions Nitriques</name>
-			<website>http://www.nitriques.com</website>
-		</author>
-		<author>
 			<name github="DeuxHuitHuit" symphony="" twitter="DeuxHuitHuit">Deux Huit Huit</name>
 			<website>http://www.deuxhuithuit.com</website>
+		</author>
+		<author>
+			<name github="Solutions-Nitriques" symphony="Nitriques" twitter="Nitriques">Solutions Nitriques</name>
+			<website>http://www.nitriques.com</website>
 		</author>
 		<author>
 			<name github="PascalPiche" symphony="">Pascal Piche</name>

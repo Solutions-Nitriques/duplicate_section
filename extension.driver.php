@@ -1,6 +1,7 @@
 <?php
 	/*
-	Copyight: Solutions Nitriques 2011
+	Copyight: Deux Huit Huit 2012-2013
+	Solutions Nitriques 2011
 	License: MIT, see the LICENCE file
 	*/
 
@@ -137,13 +138,12 @@
 					// if the create new section was successful
 					if ( is_numeric($new_section_id) && $new_section_id > 0) {
 						
-					
 						// get the fields of the section
 						$fields = $section->fetchFields();
 						
 						// if we have some
 						if (is_array($fields)) {
-		
+							
 							// copy each field
 							foreach ($fields as &$field) {
 								
@@ -166,7 +166,10 @@
 								$f->commit();
 							}
 						}
-
+						
+						// get this section relations
+						
+						
 						// redirect to the new cloned section
 						redirect(sprintf(
 							'%s/blueprints/sections/edit/%s/',
@@ -176,6 +179,9 @@
 						
 						// stop everything now
 						exit;
+						
+					} else {
+						throw new Exception("Could not create a new section");
 					}
 				}
 			}

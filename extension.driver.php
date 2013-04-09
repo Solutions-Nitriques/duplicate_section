@@ -186,7 +186,7 @@
 						}
 						
 						// get this section relations
-						$relationships = SectionManager::fetchAssociatedSections($section_id, false);
+						/*$relationships = SectionManager::fetchAssociatedSections($section_id, false);
 						
 						// fetch the new fields
 						$new_section = SectionManager::fetch($new_section_id);
@@ -201,9 +201,9 @@
 								
 								if (is_numeric($new_section_field_id) && $new_section_field_id > 0) {
 									SectionManager::createSectionAssociation(
-										$new_section_id, // the new parent
-										$relation['child_field_id'],
-										$new_section_field_id, // the new parent field
+										$new_section_id, // the new parent (cloned section)
+										$relation['child_field_id'], // the section on which the cloned section is linked to
+										$new_section_field_id, // the new parent field (cloned secyion)
 										$relation['show_association']
 									);
 									var_dump($child_field_id);
@@ -212,7 +212,7 @@
 								}
 							}
 						}
-						die;
+						die;*/
 						
 						// redirect to the new cloned section
 						redirect(sprintf(

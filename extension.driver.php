@@ -49,7 +49,7 @@
 
 					$form = Administration::instance()->Page->Form;
 
-					$button_wrap = new XMLELement('div', NULL, array(
+					$button_wrap = new XMLELement('div', null, array(
 						'id' => 'duplicate-section'
 					));
 
@@ -81,7 +81,7 @@
 					// add content to the right div
 					$div_action = self::getChildrenWithClass($form, 'div', 'actions');
 
-					if ($div_action != NULL) {
+					if ($div_action != null) {
 						$div_action->insertChildAt(1, $button_wrap);
 					}
 				}
@@ -98,7 +98,7 @@
 		 */
 		private static function getChildrenWithClass($rootElement, $tagName, $className) {
 			if (! ($rootElement) instanceof XMLElement) {
-				return NULL; // not and XMLElement
+				return null; // not and XMLElement
 			}
 
 			// contains the right css class and the right node name
@@ -110,11 +110,11 @@
 			foreach ($rootElement->getChildren() as $child) {
 				$res = self::getChildrenWithClass($child, $tagName, $className);
 
-				if ($res != NULL) {
+				if ($res != null) {
 					return $res;
 				}
 			}
-			return NULL;
+			return null;
 		}
 
 		/**
@@ -131,7 +131,7 @@
 					return intval($field->get('id'));
 				}
 			}
-			return NULL;
+			return null;
 		}
 
 		/**

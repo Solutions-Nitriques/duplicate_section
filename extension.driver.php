@@ -150,7 +150,11 @@
 				$section_id = $c['context'][1];
 
 				// original section
-				$section = SectionManager::fetch($section_id);
+				$section = (new SectionManager)
+					->select()
+					->section($section_id)
+					->execute()
+					->next();
 
 				if ($section != null) {
 					// get its settings
@@ -202,7 +206,11 @@
 						/*$relationships = SectionManager::fetchAssociatedSections($section_id, false);
 
 						// fetch the new fields
-						$new_section = SectionManager::fetch($new_section_id);
+						$new_section = (new SectionManager)
+							->select()
+							->section($new_section_id)
+							->execute()
+							->next();
 						$new_fields = $new_section->fetchFields();
 
 						if (is_array($relationships)) {

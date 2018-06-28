@@ -45,7 +45,7 @@
 				$c = Administration::instance()->getPageCallback();
 
 				// when editing a section
-				if ($c['driver'] == 'blueprintssections' && $c['context'][0] == 'edit') {
+				if ($c['driver'] == 'blueprintssections' && $c['context']['action'] == 'edit') {
 
 					$form = Administration::instance()->Page->Form;
 
@@ -147,7 +147,7 @@
 			if (is_array($_POST['action']) && isset($_POST['action']['clone'])) {
 				$c = Administration::instance()->getPageCallback();
 
-				$section_id = $c['context'][1];
+				$section_id = $c['context']['id'];
 
 				// original section
 				$section = (new SectionManager)

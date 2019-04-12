@@ -1,8 +1,6 @@
 # Duplicate Sections #
 
-Version: 1.2 
-
-## Easily duplicate/clone your section parameters and fields ##
+> Easily duplicate/clone your section parameters and fields ##
 
 ### SPECS ###
 
@@ -23,4 +21,4 @@ For user with symphony CMS version 2.2.x, use tag V1.1
 
 *Voila !*
 
-http://www.nitriques.com/open-source/
+https://deuxhuithuit.com/

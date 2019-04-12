@@ -126,6 +126,11 @@
 				
 					// remove id
 					unset($section_settings['id']);
+					// remove dates
+					unset($section_settings['creation_date']);
+					unset($section_settings['creation_date_gmt']);
+					unset($section_settings['modification_date']);
+					unset($section_settings['modification_date_gmt']);
 					
 					// new name
 					$section_settings['name'] .= ' ' . time();

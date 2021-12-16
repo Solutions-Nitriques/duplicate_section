@@ -44,6 +44,7 @@
 				$c = Administration::instance()->getPageCallback();
 				
 				// when editing a section
+				$c['context'][0] = $c['context'][0] ?? null;
 				if ($c['driver'] == 'blueprintssections' && $c['context'][0] == 'edit') {
 					
 					$form = Administration::instance()->Page->Form;
@@ -114,6 +115,7 @@
 			self::appendElementBelowView($context);
 			
 			// if the clone button was hit
+			$_POST['action']= $_POST['action'] ?? null;
 			if (is_array($_POST['action']) && isset($_POST['action']['clone'])) {
 				$c = Administration::instance()->getPageCallback();
 				
